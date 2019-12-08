@@ -20,15 +20,15 @@ void campoMinado()
     printf("\t\t   _oo____oo_oo_____oo_oo_______oo_oo________oo____oo_____oo_______oo__oo__oo___oooo_oo_____oo_oo____oo___oo____oo__\n");
     printf("\t\t   ___oooo___oo_____oo_oo_______oo_oo__________oooo_______oo_______oo_oooo_oo____ooo_oo_____oo_oooooo_______oooo____\n");
     printf("\t\t   _________________________________________________________________________________________________________________\n");
-
 }
 
 int confereArgumento(int argc, char **argv)
 {
+    //Se houver apenas um parametro na execução, será verificado se a extensão desse corresponde à .jogo
     if(argc == 2){
         char arquivo[6];
-        int n = strlen(argv[1]);
-        char *nomeArq = malloc(n * sizeof(char));
+        int n = strlen(argv[1]);                            //Verifica o tamanho da palavra e armasena em n para ser 
+        char *nomeArq = malloc(n * sizeof(char));           //feito a alocação dinamica
         strcpy(nomeArq, argv[1]);
         int num = n - 5;
         int j = 0;
@@ -36,15 +36,16 @@ int confereArgumento(int argc, char **argv)
             arquivo[j] = nomeArq[i];
             j++;
         }
-        if(strcmp(arquivo, ".jogo") != 0){
+        if(strcmp(arquivo, ".jogo") != 0){                   //Conferindo se a extensão é igual a .jogo
             free(nomeArq);
             return 1;
         }
         free(nomeArq);
+    //Se houver dois parametros na execução, será verificado se o segundo parametro corresponde a extesão .txt
     }if(argc == 3){
         char arquivo[6];
-        int n = strlen(argv[2]);
-        char *nomeArq = malloc(n * sizeof(char));
+        int n = strlen(argv[2]);                           //Verifica o tamanho da palavra e armasena em n para ser
+        char *nomeArq = malloc(n * sizeof(char));          //feito a alocação dinamica
         strcpy(nomeArq, argv[2]);
         int num = n - 4;
         int j = 0;
@@ -52,7 +53,7 @@ int confereArgumento(int argc, char **argv)
             arquivo[j] = nomeArq[i];
             j++;
         }
-        if(strcmp(arquivo, ".txt") != 0){
+        if(strcmp(arquivo, ".txt") != 0){                  //Conferindo se a extensão é igual a .txt
             free(nomeArq);
             return 1;
         }
@@ -99,6 +100,7 @@ void menuJogada()
 
 void alocaMatrizes(Campo *jogo)
 {
+    //Alocação dinamica das matrizes 
     jogo->entrada = malloc(jogo->linhas * sizeof(char *));
     jogo->saida = malloc(jogo->linhas * sizeof(char *));
     for(int i = 0; i < jogo->linhas; i++){
@@ -109,6 +111,7 @@ void alocaMatrizes(Campo *jogo)
 
 void desalocaMatrizes(Campo *jogo)
 {
+    //Liberação das memorias ocupadas pelas matrizes 
     for(int i = 0; i < jogo->linhas; i++){
         free(jogo->entrada[i]);
         free(jogo->saida[i]);
@@ -159,8 +162,7 @@ void defineDificuldade(Campo *jogo)
 {
     campoMinado();
 
-    printf("\n\n");
-    int dificuldade;
+    printf("\n\n");         
     printf(BOLD("\t\t\t\t\t     ______________________DIFICULDADE____________________\n"));
     printf(BOLD("\t\t\t\t\t    |  COMANDOS   |                NIVEIS                 |\n"));
     printf(BOLD("\t\t\t\t\t    |_____________________________________________________|\n"));
@@ -169,6 +171,7 @@ void defineDificuldade(Campo *jogo)
     printf(BOLD("\t\t\t\t\t    |     3       |     Díficil  - 16 x 20  (70 minas)    |\n"));
     printf(BOLD("\t\t\t\t\t    |_____________________________________________________|\n"));
     printf(BOLD("\t\t\t\t\t    "));
+    int dificuldade;    
    //Valida a resposta do úsuario e imprime uma mensagem de erro caso a resposta não seja aceita
     do{
         scanf("%d", &dificuldade);
@@ -240,19 +243,21 @@ void geraAleatorio(Campo *jogo)
     }
 }
 
-void imprimeCampo(Campo jogo){
-  center(jogo.colunas);
-  printf(BOLD(BG_MAGENTA(TAB_TL)));
-  printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR TAB_TJ)));
+void imprimeCampo(Campo jogo)
+{
+    //Imprime a matriz que o úsuario vê usando o sistema de cores ANSI
+    center(jogo.colunas);                                               //Função que centraliza as matrizes
+    printf(BOLD(BG_MAGENTA(TAB_TL)));
+    printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR TAB_TJ)));
 
-  for(int i = 0; i < jogo.colunas; i++){
-    if(i != (jogo.colunas -1))
-        printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR)));
-    else
-        printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR TAB_TR)));
-    }
+    for(int i = 0; i < jogo.colunas; i++){
+        if(i != (jogo.colunas -1))
+            printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR)));
+        else
+            printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR TAB_TR)));
+        }
     printf("\n");
-    center(jogo.colunas);
+    center(jogo.colunas);                                                //Função que centraliza as matrizes
     printf(BOLD(BG_MAGENTA(TAB_VER)));
     printf(BOLD(BG_MAGENTA("   "TAB_VER)));
 
@@ -262,7 +267,7 @@ void imprimeCampo(Campo jogo){
 
     printf(BOLD(BG_MAGENTA(TAB_VER)));
     printf("\n");
-    center(jogo.colunas);
+    center(jogo.colunas);                                                //Função que centraliza as matrizes
     printf(BOLD(BG_MAGENTA(TAB_ML)));
     printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR TAB_MJ)));
 
@@ -276,7 +281,7 @@ void imprimeCampo(Campo jogo){
     printf("\n");
 
     for(int i = 0; i < jogo.linhas; i++){
-        center(jogo.colunas);
+        center(jogo.colunas);                                             //Função que centraliza as matrizes
         printf(BOLD(BG_MAGENTA(TAB_VER)));
         printf(BOLD(BG_MAGENTA(WHITE(" %c "))), 'A' + i);
         printf(BOLD(BG_MAGENTA(TAB_VER)));
@@ -301,7 +306,7 @@ void imprimeCampo(Campo jogo){
         }
         printf(BOLD(BG_MAGENTA(TAB_VER))"\n");
     }
-    center(jogo.colunas);
+    center(jogo.colunas);                                                             //Função que centraliza as matrizes
     printf(BOLD(BG_MAGENTA(TAB_BL)));
     printf(BOLD(BG_MAGENTA(TAB_HOR TAB_HOR TAB_HOR TAB_BJ)));
 
@@ -316,6 +321,7 @@ void imprimeCampo(Campo jogo){
 
 void expandeCelulas(Campo *jogo, int linha, int coluna)
 {
+    //Se o jogador tentar abrir uma celula que já foi descoberta não altera a puntuação
     if(jogo->entrada[linha][coluna] == jogo->saida[linha][coluna])
         jogo->pontos--;
     //Se a coordenada escolhida estiver bomba, revala todas as bombas 
@@ -342,7 +348,7 @@ void expandeCelulas(Campo *jogo, int linha, int coluna)
         jogo->pontos++;
         for(i = linha - 1; i <= linha + 1; i++){
             for(j = coluna - 1; j <= coluna + 1; j++){
-                //Verifica se i e j estão no limite da matriz e se a coordenada é igual a -
+                //Verifica se i e j estão no limite da matriz e se a coordenada é igual a - ou igual a *
                 if(i >= 0 && i < jogo->linhas && j >= 0 && j < jogo->colunas && (jogo->saida[i][j] == '-' || jogo->saida[i][j] == '*')){
                     expandeCelulas(jogo, i, j);
                 }
@@ -375,6 +381,7 @@ void coordenadas(int *linha, int *coluna, Campo *jogo)
     char linCol[100];
     //Valida a coordenada digitada e imprime uma mensagem de erro caso a resposta não seja aceita
     do{
+        //Valida a coordenada digitada e imprime uma mensagem de erro caso a resposta não seja aceita
         do{
             scanf("%s", linCol);
             if(strlen(linCol) >= 3)
@@ -406,7 +413,6 @@ void salvarArq(Campo jogo, int linha, int coluna)
     char nomeJogo[100];
     //Trata o nome do arquivo digitado pelo úsuario.
     do{
-        //printf("\n\t\t\t\t\t    Digite o nome do arquivo para ser salvo [SEM EXTENSÃO]: ");
         scanf("%s", nomeArq);
         if(strlen(nomeArq) > 99)
             printf(RED("\t\t\t\t\t    ERRO - O nome do arquivo digitado é muito longo. Tente novamente: "));
@@ -463,7 +469,7 @@ void tratararqSalvo(Campo *jogo)
         }
     }
     contaBombas(jogo);
-    jogo->bandeiras= jogo->bandeiras - contBombas;
+    jogo->bandeiras= jogo->bandeiras - contBombas;                          //Atualiza o número de bandeiras
         
 }
 
@@ -529,6 +535,7 @@ void jogada(char *acao, Campo *jogo, int *linha, int *coluna)
     }while(strcmp(acao, "x") != 0 && strcmp(acao, "o") != 0 && strcmp(acao, "resolver") != 0 && 
     strcmp(acao, "salvar") != 0 && strcmp(acao, "sair") != 0);
 
+    //Chama a função de acordo com a opção digitada
     if(strcmp(acao, "resolver") == 0){
         resolverJogo(jogo);
     }
@@ -563,29 +570,31 @@ void jogarNovamente(char *jogarNovamente)
 
 void gameover()
 {
-        usleep(200000);
-        printf("\n\n\a");
-        printf(RED("\t\t\t\t     oooooo____ooooooo_ooooooo___ooooooo______oooo____oooooooo____ooo____\n"));
-        usleep(200000);
-        printf(RED("\t\t\t\t     oo____oo__oo______oo____oo__oo____oo___oo____oo_____oo_____oo___oo__\n"));
-        usleep(200000);
-        printf(RED("\t\t\t\t     oo_____oo_oooo____oo____oo__oo____oo__oo______oo____oo____oo_____oo_\n"));
-        usleep(200000);
-        printf(RED("\t\t\t\t     oo_____oo_oo______ooooooo___ooooooo___oo______oo____oo____ooooooooo_\n"));
-        usleep(200000);
-        printf(RED("\t\t\t\t     oo____oo__oo______oo____oo__oo____oo___oo____oo_____oo____oo_____oo_\n"));
-        usleep(200000);
-        printf(RED("\t\t\t\t     oooooo____ooooooo_oo_____oo_oo_____oo____oooo_______oo____oo_____oo_\n"));
-        usleep(200000);
-        printf(RED("\t\t\t\t    ____________________________________________________________________\n"));
-        usleep(200000);
-        printf("\n\n");
+    //Printf com um intervalo de 200000 microsegundos, ou seja 0.2 segundos    
+    usleep(200000);
+    printf("\n\n\a");
+    printf(RED("\t\t\t\t     oooooo____ooooooo_ooooooo___ooooooo______oooo____oooooooo____ooo____\n"));
+    usleep(200000);
+    printf(RED("\t\t\t\t     oo____oo__oo______oo____oo__oo____oo___oo____oo_____oo_____oo___oo__\n"));
+    usleep(200000);
+    printf(RED("\t\t\t\t     oo_____oo_oooo____oo____oo__oo____oo__oo______oo____oo____oo_____oo_\n"));
+    usleep(200000);
+    printf(RED("\t\t\t\t     oo_____oo_oo______ooooooo___ooooooo___oo______oo____oo____ooooooooo_\n"));
+    usleep(200000);
+    printf(RED("\t\t\t\t     oo____oo__oo______oo____oo__oo____oo___oo____oo_____oo____oo_____oo_\n"));
+    usleep(200000);
+    printf(RED("\t\t\t\t     oooooo____ooooooo_oo_____oo_oo_____oo____oooo_______oo____oo_____oo_\n"));
+    usleep(200000);
+    printf(RED("\t\t\t\t    ____________________________________________________________________\n"));
+    usleep(200000);
+    printf("\n\n");
 
     
 }
 
 void win()
 {   
+    //Printf com um intervalo de 200000 microsegundos, ou seja 0.2 segundos  
     usleep(200000);
     printf("\n\n\a");
     printf(YELLOW("\t\t\t\t\t**  oo____oo_oooo_oooooooo____oooo____ooooooo___oooo____ooo____   **\n"));
@@ -609,7 +618,9 @@ void win()
 
 void center(int larg)
 {
+    //Calcula a posição da string na tela do terminal 
     int len = (46-larg)/2;
+    //um for de n espaços para que seja centralizado
     for (int i=0; i< len; i++)
         printf("   ");
 
@@ -617,7 +628,9 @@ void center(int larg)
 
 void leEnter() {
     int c;
-    do {
+    //Armazena na variavel c o que foi digitado pelo úsuario e
+    //Enquanto não for o espaço (corresponde a 10 na bela ASCII) e não conseguir ler nada
+    do{
         c = getchar();
     } while (c != 10 && c != EOF);
 }

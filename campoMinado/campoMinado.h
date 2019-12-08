@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <unistd.h>
+#include <unistd.h>                     //Função para usar usleep()
 
 // cores e formato de texto
 #define ANSI_RESET            "\x1b[0m"  // desativa os efeitos anteriores
@@ -80,11 +80,11 @@ PARAMETRO:
 */
 
 typedef struct{
-    int linhas;
-    int colunas;
-    int bombas;
-    int pontos;
-    int bandeiras;
+    int linhas;                             //Recebe o tamanho das linhas das matrizes
+    int colunas;                            //Recebe o tamanho das colunas das matrizes
+    int bombas;                             //Recebe a quatidade de bombas no jogo
+    int pontos;                             //Recebe os pontos do jogo
+    int bandeiras;                          //Recebe a quatidade de bandeiras que o jogador pode usar
     char **entrada;                         //Matriz que recebe o jogo raiz
     char **saida;                           //Matriz que o úsuario visualiza e onde é feita as alterações
 } Campo;
